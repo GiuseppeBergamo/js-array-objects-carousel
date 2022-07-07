@@ -22,8 +22,8 @@ Aggiungere bottoni di start/stop e di inversione del meccanismo di autoplay.
 
 */
 
-
-
+const imagesContainer = document.querySelector(".images");
+const description = document.getElementById("description");
 
 const images = [
     {
@@ -59,3 +59,76 @@ const images = [
             'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam.',
     },
 ];
+
+// stampo i tag img
+
+let img = '';
+
+images.forEach((image) => {
+    img += `<img src="${image.url}"></img>`;
+});
+
+imagesContainer.innerHTML = img;
+
+//stampo il titolo e la descrizione
+
+let text = '';
+
+images.forEach((txt) => {
+    text += `
+        <div>
+            <h3>${txt.title}</h3>
+            <p>${txt.description}</p>
+        </div>
+    `
+})
+
+description.innerHTML = text;
+
+// recupero i tag e aggiungo la classe active
+
+const imageElement = document.querySelectorAll('#carousel img');
+
+let currentActiveIndex = 0;
+
+imageElement[currentActiveIndex].classList.add("active");
+
+//recupero i test e le descrizioni 
+
+const descriptions = document.querySelectorAll('#description div');
+
+descriptions[currentActiveIndex].classList.add("active");
+
+// recupero i bottoni
+const leftButton = document.getElementById("left");
+const rightButton = document.getElementById("right");
+
+
+rightButton.addEventListener('click', function () {
+    imageElement[currentActiveIndex].classList.remove("active");
+    descriptions[currentActiveIndex].classList.remove("active");
+
+    currentActiveIndex++;
+
+    if (currentActiveIndex == imageElement.length) {
+        currentActiveIndex = 0
+    }
+
+    imageElement[currentActiveIndex].classList.add("active");
+    descriptions[currentActiveIndex].classList.add("active");
+})
+
+
+leftButton.addEventListener('click', function () {
+    imageElement[currentActiveIndex].classList.remove("active");
+    descriptions[currentActiveIndex].classList.remove("active");
+
+    currentActiveIndex--;
+
+    if (currentActiveIndex < 0) {
+        currentActiveIndex = 4;
+    }
+
+    imageElement[currentActiveIndex].classList.add("active");
+    descriptions[currentActiveIndex].classList.add("active");
+})
